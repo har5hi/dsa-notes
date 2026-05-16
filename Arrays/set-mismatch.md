@@ -1,46 +1,59 @@
-code :
+# Set Mismatch
 
+## Code
+
+```cpp
 class Solution {
 public:
     vector<int> findErrorNums(vector<int>& nums) {
-        unordered_set <int> s;
+        unordered_set<int> s;
         int n = nums.size();
 
         int dupe = -1;
         int missing = -1;
 
-        for(int num : nums){
-            if(s.find(num) != s.end()){
+        for(int num : nums) {
+            if(s.find(num) != s.end()) {
                 dupe = num;
             }
             s.insert(num);
         }
-        for(int i = 1; i<=n; i++){
-            if(s.find(i) == s.end()){
+
+        for(int i = 1; i <= n; i++) {
+            if(s.find(i) == s.end()) {
                 missing = i;
             }
         }
-        return{dupe,missing};
+
+        return {dupe, missing};
     }
 };
+```
 
-#Time Complexity - O(n)
-#Space Complexity - O(n)
+## Time Complexity
+- O(n)
 
-mistake i made was - for(int i = 0; i<n; i++)
-You are checking
-0 → n-1 - BUT the problem says numbers are from: 1 → n
-For: nums = [1,1] n = 2
-Your loop checks:
+## Space Complexity
+- O(n)
 
-i = 0
-i = 1
-0 is not in set → missing becomes 0
-but 2 is never checked 
+## Mistake I Made
+Initially I used:
 
-That’s why output becomes wrong.
+```cpp
+for(int i = 0; i < n; i++)
+```
 
-Change:
-for(int i = 0; i<n; i++)
-to:
+But the problem states numbers are from **1 → n**, not **0 → n-1**.
+
+Example:
+nums = [1,1], n = 2
+
+Checking from 0 misses the number 2 completely.
+
+That is why the o/p becomes wrong
+Change: 
+```cpp
+for(int i = 0; i<n; i++) 
+to: 
 for(int i = 1; i<=n; i++)
+```
