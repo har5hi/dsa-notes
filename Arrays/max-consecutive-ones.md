@@ -1,17 +1,18 @@
 # Max Consecutive Ones
 
-# Intuition
+## Intuition
 
 We keep:
 
 count → current streak of 1s
+
 maxCount → maximum streak seen so far
+
 Rules:
 if element is 1 → increase count
 if element is 0 → reset count = 0
 
 At every step:
-
 maxCount = max(maxCount, count)
 
 code: 
@@ -38,8 +39,8 @@ public:
     }
 };
 ```
-# Time Complexity
+## Time Complexity
 - O(n)
 
-# Space Complexity
+## Space Complexity
 - O(1)
