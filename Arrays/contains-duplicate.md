@@ -1,6 +1,6 @@
-## Contains Duplicate
+# Contains Duplicate
 
-# Intuition
+## Intuition
 
 - We need to check if any number appears more than once.
 - Use a hash set (unordered_set) to store elements we have already seen.
@@ -9,7 +9,7 @@ If the current element is already in the set → duplicate found → return true
 
 Otherwise insert it into the set
 
-# Important Concept
+## Important Concept
 ```cpp unordered_set ```
 - Stores unique elements
 - Average lookup time = O(1)
@@ -38,7 +38,7 @@ public:
 };
 ```
 
-# Time Complexity
+## Time Complexity
 - Average Case:
 
 find() → O(1)
@@ -47,6 +47,6 @@ insert() → O(1)
 
 Loop runs n times: O(n)
 
-# Space Complexity
+## Space Complexity
 
 In worst case, all elements are unique and stored in set: O(n)
