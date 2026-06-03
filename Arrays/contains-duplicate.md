@@ -48,5 +48,4 @@ insert() → O(1)
 Loop runs n times: O(n)
 
 ## Space Complexity
-
-In worst case, all elements are unique and stored in set: O(n)
+- In worst case, all elements are unique and stored in set: O(n)
