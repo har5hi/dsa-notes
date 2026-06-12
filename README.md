@@ -4,7 +4,7 @@ Welcome to my little corner of problem solving & endless debugging 😭💻
 
 This repository contains my solutions to LeetCode problems along with my personal notes, approaches, observations, mistakes, and learnings while exploring the world of **Data Structures & Algorithms**.
 
-Currently following the **NeetCode 150 Roadmap** and trying to become better at:
+Currently following **Striver's DSA Sheet** and trying to become better at:
 
 * 🧠 Problem Solving
 * ⚡ Logical Thinking
