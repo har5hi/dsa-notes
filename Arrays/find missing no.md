@@ -161,46 +161,6 @@ Missing number = 2
 
 ---
 
-## Why Does It Work?
-
-Consider:
-
-```text
-nums = [3, 0, 1]
-
-Numbers should be:
-
-0, 1, 2, 3
-```
-
-XOR of all numbers:
-
-```text
-(3 ^ 0 ^ 1) ^ (1 ^ 2 ^ 3)
-```
-
-Rearranging:
-
-```text
-(1 ^ 1) ^ (3 ^ 3) ^ 0 ^ 2
-```
-
-Cancelling pairs:
-
-```text
-0 ^ 0 ^ 0 ^ 2
-```
-
-Result:
-
-```text
-2
-```
-
-The missing number remains.
-
----
-
 ## Code (Optimal XOR Solution)
 
 ```cpp
