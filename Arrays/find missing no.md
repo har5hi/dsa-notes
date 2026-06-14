@@ -6,7 +6,7 @@ Given an array `nums` containing `n` distinct numbers in the range `[1, n + 1]`,
 
 ---
 
-## Approach
+## Approach 1
 
 The array contains numbers from `1` to `n + 1`, with exactly one number missing.
 
@@ -116,7 +116,7 @@ The array is traversed only once and no extra space is used.
 
 ---
 
-## Optimal Approach (XOR)
+## Approach 2 - Optimal (XOR)
 
 ### Intuition
 
