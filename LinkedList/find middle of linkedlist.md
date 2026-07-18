@@ -177,3 +177,235 @@ Whenever you see questions involving:
 Think of the **Slow & Fast Pointer (Tortoise and Hare)** technique.
 
 ---
+
+# 2095. Delete the Middle Node of a Linked List
+
+---
+
+# Problem Statement
+
+Given the `head` of a singly linked list, delete the **middle node** and return the head of the modified linked list.
+
+- If the list has **only one node**, return `NULL`.
+- The middle node is the **⌊n / 2⌋th** node (0-indexed).
+
+---
+
+# Approach 1 : Brute Force (Find Length)
+
+## Intuition
+
+First find the length of the linked list.
+
+The middle node is at
+
+```
+Length / 2
+```
+
+Move to the node just before the middle node and delete it.
+
+---
+
+# Code
+
+```cpp
+class Solution {
+public:
+    ListNode* deleteMiddle(ListNode* head) {
+
+        if(head == nullptr || head->next == nullptr){
+            return nullptr;
+        }
+
+        int len = 0;
+
+        ListNode* temp = head;
+
+        while(temp){
+            len++;
+            temp = temp->next;
+        }
+
+        int middle = len / 2;
+
+        temp = head;
+
+        for(int i = 1; i < middle; i++){
+            temp = temp->next;
+        }
+
+        ListNode* node = temp->next;
+
+        temp->next = temp->next->next;
+
+        delete node;
+
+        return head;
+    }
+};
+```
+
+---
+
+# Time Complexity
+
+```
+O(N) + O(N)
+
+≈ O(N)
+```
+
+---
+
+# Space Complexity
+
+```
+O(1)
+```
+
+---
+
+# Approach 2 : Optimal (Slow & Fast Pointer)
+
+## Intuition ⭐⭐⭐
+
+Use Slow and Fast pointers.
+
+- Slow moves **one step**.
+- Fast moves **two steps**.
+
+Maintain one extra pointer
+
+```
+prev
+```
+
+which always points to the node before `slow`.
+
+When `fast` reaches the end,
+
+`slow` points to the middle node.
+
+`prev` points to the node before the middle.
+
+Delete
+
+```
+slow
+```
+
+by changing
+
+```
+prev->next
+```
+
+---
+
+# Why Do We Need `prev`?
+
+The slow pointer points to the middle node.
+
+To delete it, we need the previous node.
+
+```
+Prev -> Slow -> Next
+```
+
+Change
+
+```
+Prev->next = Slow->next
+```
+
+Now the middle node is removed.
+
+---
+
+# Code
+
+```cpp
+class Solution {
+public:
+    ListNode* deleteMiddle(ListNode* head) {
+
+        if(head == nullptr || head->next == nullptr){
+            return nullptr;
+        }
+
+        ListNode* slow = head;
+        ListNode* fast = head;
+        ListNode* prev = nullptr;
+
+        while(fast != nullptr && fast->next != nullptr){
+
+            prev = slow;
+
+            slow = slow->next;
+
+            fast = fast->next->next;
+        }
+
+        prev->next = slow->next;
+
+        delete slow;
+
+        return head;
+    }
+};
+```
+
+```cpp
+class Solution {
+public:
+    ListNode* deleteMiddle(ListNode* head) {
+
+        if(head == nullptr || head->next == nullptr)
+            return nullptr;
+
+        ListNode* slow = head;
+        ListNode* fast = head->next->next;
+
+        while(fast != nullptr && fast->next != nullptr){
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+
+        slow->next = slow->next->next;
+
+        return head;
+    }
+};
+```
+
+---
+
+# Time Complexity
+
+```
+O(N)
+```
+
+Only one traversal.
+
+---
+
+# Space Complexity
+
+```
+O(1)
+```
+
+---
+
+# Comparison
+
+| Approach | Time | Space |
+|----------|------|-------|
+| Find Length | O(N) | O(1) |
+| Slow & Fast Pointer | O(N) | O(1) |
+
+The optimal approach performs the deletion in **one traversal**, making it the preferred interview solution.
+
+---
