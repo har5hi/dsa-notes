@@ -172,3 +172,46 @@ O(1)
 Only constant extra space is used.
 
 ---
+
+# Leetcode - 83
+
+## Remove Duplicates from Sorted Singly Linked List
+
+```cpp
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+
+        if(head == nullptr)
+            return head;
+
+        ListNode* curr = head;
+
+        while(curr != nullptr && curr->next != nullptr){
+
+            if(curr->val == curr->next->val){
+
+                ListNode* duplicate = curr->next;
+                curr->next = duplicate->next;
+                delete duplicate;
+            }
+            else{
+                curr = curr->next;
+            }
+        }
+
+        return head;
+    }
+};
+```
+--- 
+
+# Time Complexity 
+- O(N)
+
+---
+
+# Space Complexity
+- O(1)
+
+---
