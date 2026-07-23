@@ -212,14 +212,11 @@ public:
         ListNode* newTail = head;
 
         while(steps--){
-
             newTail = newTail->next;
         }
 
         ListNode* newHead = newTail->next;
-
         newTail->next = nullptr;
-
         return newHead;
     }
 };
