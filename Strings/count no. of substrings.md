@@ -261,7 +261,6 @@ public:
         }
         return ans;
     }
-
     int countSubstr(string s, int k) {
         return atMostK(s,k) - atMostK(s,k-1);
     }
