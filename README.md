@@ -1,6 +1,6 @@
 # ✨ LeetCode Journey | DSA Notes & Solutions 🚀
 
-Welcome to my little corner of problem solving & endless debugging 😭💻
+Welcome to my little corner of problem solving 💻
 
 This repository contains my solutions to LeetCode problems along with my personal notes, approaches, observations, mistakes, and learnings while exploring the world of **Data Structures & Algorithms**.
 
@@ -14,8 +14,6 @@ Currently following **Striver's DSA Sheet** and trying to become better at:
 
 ---
 
-## 🌱 Why This Repository?
-
 I created this repo to:
 
 * Track my DSA progress 📈
@@ -27,7 +25,5 @@ I created this repo to:
 ---
 
 ## ⭐ Goal
-
-To grow step by step, stay consistent, and become confident in solving problems instead of memorizing solutions ✨
 
 > “One problem at a time.” 💫
