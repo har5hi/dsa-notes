@@ -456,8 +456,8 @@ public:
         int oddCount = 0;
         int ans = 0;
 
-        for(int right = 0; right < nums.size(); right++) {
-
+        for(int right = 0; right < nums.size(); right++){
+            
             // Add current number if it is odd
             oddCount += nums[right] % 2;
 
