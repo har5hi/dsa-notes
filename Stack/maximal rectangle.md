@@ -315,9 +315,3 @@ This problem is built directly on
 
 - ⭐ LC 84 Largest Rectangle in Histogram
 - LC 85 Maximal Rectangle
-
-If you know LC 84 well,
-
-LC 85 becomes almost straightforward.
-
----
