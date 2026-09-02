@@ -209,42 +209,6 @@ O(1)
 
 ---
 
-# 🔍 Line-by-Line Explanation
-
-```cpp
-static bool cmp(Item a, Item b)
-```
-
-Comparator used for sorting.
-
----
-
-```cpp
-double r1 = (double)a.value / a.weight;
-```
-
-Compute value per unit weight of item A.
-
----
-
-```cpp
-return r1 > r2;
-```
-
-Sort in descending order.
-
-Highest ratio comes first.
-
----
-
-```cpp
-sort(arr, arr + n, cmp);
-```
-
-Sort all items by profit density.
-
----
-
 # 🎯 Why Greedy Works?
 
 Suppose two items:
