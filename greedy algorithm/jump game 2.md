@@ -78,13 +78,9 @@ Reachable
 [1,2]
 ```
 
-Now while exploring this range,
+Now while exploring this range, find the position that lets us reach the farthest.
 
-find the position that lets us reach the farthest.
-
-Once we've finished the current range,
-
-we **must make one jump**.
+Once we've finished the current range,  we **must make one jump**.
 
 Then the next range starts.
 
