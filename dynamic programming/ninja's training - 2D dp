@@ -553,3 +553,45 @@ We only need
 | Space Optimized | O(N × 4 × 3) | O(4) = O(1) |
 
 ---
+
+# Pattern Recognition
+
+Whenever you see
+
+- Previous choice affects today's choice
+- Current answer depends on multiple variables
+- "Cannot choose the same option consecutively"
+
+Think
+
+```
+2D DP
+
+↓
+
+State
+
+(Current Position,
+
+Previous Choice)
+```
+
+---
+
+# Interview Tips
+
+✅ Start by explaining why **1D DP is not sufficient**.
+
+✅ Clearly define the state:
+
+```text
+dp[day][last]
+```
+
+✅ Explain what `last = 3` represents.
+
+✅ Derive the recurrence before coding.
+
+✅ Mention that only the previous day's row is required, allowing space optimization from **O(N × 4)** to **O(4)**.
+
+---
