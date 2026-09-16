@@ -1,0 +1,555 @@
+# Ninja's Training | Dynamic Programming
+
+---
+
+# Problem Statement
+
+A ninja has to train for **N days**.
+
+Every day, he can perform **one** of the following three activities:
+
+- Running
+- Fighting Practice
+- Learning New Moves
+
+Each activity gives certain **points**.
+
+These points are stored in a 2D matrix:
+
+```text
+points[day][task]
+```
+
+where
+
+- `task = 0` → Running
+- `task = 1` → Fighting
+- `task = 2` → Learning
+
+The ninja **cannot perform the same activity on two consecutive days.**
+Return the **maximum points** the ninja can earn after `N` days.
+
+---
+
+## Example
+
+```text
+Input
+
+points =
+
+[
+ [10,40,70],
+ [20,50,80],
+ [30,60,90]
+]
+```
+
+Output
+
+```text
+210
+```
+
+### Explanation
+
+One optimal schedule is:
+
+```text
+Day 0 → Running (10)
+Day 1 → Fighting (50)
+Day 2 → Learning (90)
+Total = 150
+```
+
+A better schedule is:
+
+```text
+Day 0 → Fighting (40)
+Day 1 → Learning (80)
+Day 2 → Fighting (60)
+Total = 180
+```
+
+The best schedule is:
+
+```text
+Day 0 → Learning (70)
+Day 1 → Fighting (50)
+Day 2 → Learning (90)
+Total = 210
+```
+
+---
+
+# Intuition
+
+Unlike previous DP problems, here the answer does **not** depend only on the current day.
+It also depends on
+> **What activity was performed yesterday.**
+Suppose today is
+
+```
+Day = 3
+```
+
+If yesterday's task was
+
+```
+Running
+```
+
+today we can choose
+
+```
+Fighting
+
+OR
+
+Learning
+```
+
+But if yesterday's task was
+
+```
+Learning
+```
+
+today we can choose
+
+```
+Running
+
+OR
+
+Fighting
+```
+
+Therefore, the answer changes based on
+- Current Day
+- Previous Task
+One variable is not enough.
+
+---
+
+# Recurrence Relation
+
+Suppose
+
+```
+solve(day,last)
+```
+
+We try every task
+
+```
+0
+1
+2
+```
+
+except
+
+```
+last
+```
+
+The recurrence becomes
+
+```
+answer = max(points[day][task] + solve(day-1,task))
+```
+
+for every
+
+```
+task != last
+```
+
+---
+
+# Approach 1 — Pure Recursion
+
+## Idea
+
+Stand at the current day. Try every valid activity.
+Recursively solve the remaining days.
+Take the maximum.
+
+---
+
+# Base Case
+
+When
+
+```
+day == 0
+```
+
+There are no previous days.
+
+Simply choose
+
+the best activity
+
+that is **not equal to last.**
+
+---
+
+# Recursive Code
+
+```cpp
+class Solution {
+public:
+
+    int solve(int day, int last, vector<vector<int>>& points)
+    {
+        if(day == 0)
+        {
+            int maxi = 0;
+            for(int task = 0; task < 3; task++)
+            {
+                if(task != last)
+                    maxi = max(maxi, points[0][task]);
+            }
+            return maxi;
+        }
+
+        int maxi = 0;
+        for(int task = 0; task < 3; task++)
+        {
+            if(task != last)
+            {
+                int point = points[day][task] + solve(day - 1, task, points);
+                maxi = max(maxi, point);
+            }
+        }
+        return maxi;
+    }
+
+    int ninjaTraining(int n, vector<vector<int>>& points)
+    {
+        return solve(n - 1, 3, points);
+    }
+};
+```
+
+---
+
+# Time Complexity
+
+Every day, we try up to
+
+```
+3
+```
+
+tasks.
+
+The recursion branches exponentially.
+
+```
+O(3^N)
+```
+
+---
+
+# Space Complexity
+
+Recursive Stack
+
+```
+O(N)
+```
+
+---
+
+# Approach 2 — Memoization (Top-Down DP)
+
+## Idea
+
+Use a 2D DP array.
+
+```
+dp[day][last]
+```
+
+stores
+
+```
+Maximum points
+for
+
+(day,last)
+```
+
+If already computed, return it immediately.
+
+---
+
+# Memoization Code
+
+```cpp
+class Solution {
+public:
+
+    int solve(int day, int last, vector<vector<int>>& points, vector<vector<int>>& dp)
+    {
+        if(day == 0)
+        {
+            int maxi = 0;
+            for(int task = 0; task < 3; task++)
+            {
+                if(task != last)
+                    maxi = max(maxi, points[0][task]);
+            }
+            return maxi;
+        }
+
+        if(dp[day][last] != -1)
+            return dp[day][last];
+
+        int maxi = 0;
+
+        for(int task = 0; task < 3; task++)
+        {
+            if(task != last)
+            {
+                int point = points[day][task] + solve(day - 1, task, points, dp);
+                maxi = max(maxi, point);
+            }
+        }
+        dp[day][last] = maxi;
+        return dp[day][last];
+    }
+
+    int ninjaTraining(int n, vector<vector<int>>& points)
+    {
+        vector<vector<int>> dp(n,vector<int>(4, -1));
+        return solve(n - 1, 3, points, dp);
+    }
+};
+```
+
+---
+
+# Time Complexity
+
+Number of states
+
+```
+N × 4
+```
+
+Each state tries
+
+```
+3
+```
+
+tasks.
+
+Overall
+
+```
+O(N × 4 × 3) ≈ O(N)
+```
+
+---
+
+# Space Complexity
+
+DP Table
+
+```
+O(N × 4)
+```
+
+Recursive Stack
+
+```
+O(N)
+```
+
+Total
+
+```
+O(N)
+```
+
+---
+
+# Approach 3 — Tabulation (Bottom-Up DP)
+
+## Idea
+
+Instead of solving recursively, build the answer from **Day 0** to **Day N-1**.
+
+We already know
+
+```text
+dp[day][last]
+```
+
+stores
+
+```text
+Maximum points that can be earned
+up to "day"
+
+when the previous day's activity is "last".
+```
+
+We simply fill the table row by row.
+
+---
+
+# Base Case
+
+For
+
+```
+Day 0
+```
+
+there are no previous days.
+
+We manually compute all four possibilities.
+
+---
+
+# Tabulation Code
+
+```cpp
+class Solution {
+public:
+
+    int ninjaTraining(int n, vector<vector<int>>& points)
+    {
+        vector<vector<int>> dp(n,vector<int>(4, 0));
+
+        dp[0][0] = max(points[0][1], points[0][2]);
+        dp[0][1] = max(points[0][0], points[0][2]);
+        dp[0][2] = max(points[0][0], points[0][1]);
+        dp[0][3] = max(points[0][0], max(points[0][1], points[0][2]));
+
+        for(int day = 1; day < n; day++)
+        {
+            for(int last = 0; last < 4; last++)
+            {
+                dp[day][last] = 0;
+
+                for(int task = 0; task < 3; task++)
+                {
+                    if(task != last)
+                    {
+                        int point = points[day][task] + dp[day-1][task];
+                        dp[day][last] = max(dp[day][last], point);
+                    }
+                }
+            }
+        }
+        return dp[n-1][3];
+    }
+};
+```
+
+---
+
+## Final Table
+
+| Day | Last=0 | Last=1 | Last=2 | Last=3 |
+|----|--------:|--------:|--------:|--------:|
+|0|70|70|40|70|
+|1|120|120|90|120|
+|2|210|180|180|210|
+
+Answer
+
+```
+dp[2][3]
+
+=
+
+210
+```
+
+---
+
+# Time Complexity
+
+Number of states
+
+```
+N × 4
+```
+
+Each state tries
+
+```
+3
+```
+
+activities.
+
+```
+O(N × 4 × 3) ≈ O(N)
+```
+
+---
+
+# Space Complexity
+
+DP Table
+
+```
+O(N × 4)
+```
+
+---
+
+# Can We Space Optimize?
+
+Yes.
+
+Notice
+
+```
+dp[day]
+```
+
+depends only on
+
+```
+dp[day-1]
+```
+
+We never use
+
+```
+day-2
+
+day-3
+```
+
+Therefore,
+
+the entire DP table is unnecessary.
+
+We only need
+
+- Previous Day
+- Current Day
+
+---
+
+# Complexity Comparison
+
+| Approach | Time | Space |
+|----------|------|-------:|
+| Recursion | O(3ᴺ) | O(N) |
+| Memoization | O(N × 4 × 3) | O(N × 4) + O(N) |
+| Tabulation | O(N × 4 × 3) | O(N × 4) |
+| Space Optimized | O(N × 4 × 3) | O(4) = O(1) |
+
+---
